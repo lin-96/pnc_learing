@@ -46,20 +46,22 @@ int main() {
     };
 
     for(double i=0.0; i<=50.0; i+=0.01) {
-        Point ans = pn(i, vp);
-        bezier_x.push_back(ans.x);
-        bezier_y.push_back(ans.y);
-
         control_x.push_back(i);
         control_y.push_back((i <= 25.0) ? -2.0 : 2.0);
     }
 
-    plt::xlim(0, 50);
+    Point bezier_p;
+    for(double j=0.0; j<=1.0; j+=0.01) {
+        bezier_p = pn(j, vp);
+        bezier_x.push_back(bezier_p.x);
+        bezier_y.push_back(bezier_p.y);
+    }
+
+    plt::xlim(-10, 60);
     plt::ylim(-3, 3);
-    for(int k=0; k<vp.size()-1; k++) {
+    for(int k=0; k<vp.size(); k++) {
         plt::annotate("P" + to_string(k), vp[k].x + 0.1, vp[k].y - 0.2);
     }
-    plt::annotate("P4", vp.back().x - 1.5, vp.back().y - 0.2);
     plt::annotate("Bezier curve", 33.0, 0.4);
     plt::title("Bezier change lane");
     plt::arrow(37.1, 0.54, 0.0, 0.7);
